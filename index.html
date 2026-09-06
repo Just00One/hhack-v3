@@ -39,9 +39,7 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        .glow-effect {
-            animation: clientGlow 1.5s infinite alternate;
-        }
+        .glow-effect { animation: clientGlow 1.5s infinite alternate; }
         @keyframes clientGlow {
             0% { box-shadow: 0 0 5px var(--accent-gold), inset 0 0 5px rgba(255,204,0,0.2); }
             100% { box-shadow: 0 0 20px var(--accent-gold), inset 0 0 10px rgba(255,204,0,0.6); border-color: #fff; }
@@ -60,7 +58,6 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            box-shadow: 0 0 10px rgba(255, 204, 0, 0.1);
         }
 
         .games-grid { display: grid; grid-template-columns: 1fr; gap: 10px; width: 100%; margin-top: 15px; max-height: 60vh; overflow-y: auto; padding-right: 5px; }
@@ -108,7 +105,6 @@
         .mine-box.revealed-gold { background: #1b4332 !important; border-color: #52b788 !important; color: #52b788 !important; }
         .mine-box.revealed-bomb { background: #4a1515 !important; border-color: #e63946 !important; color: #e63946 !important; }
         .mine-btn { background: var(--mine-teal); color: #0f172a; border: none; padding: 10px 20px; font-size: 15px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
-        .mine-btn:hover { background: #00b386; }
 
         .controls { padding: 10px 15px; background: #161b22; border-top: 2px solid #333; display: flex; gap: 10px; flex-shrink: 0; }
         .btn-3d { padding: 12px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; color: #000; flex: 1; }
@@ -135,18 +131,18 @@
     </div>
 </div>
 
-<!-- شاشة الدخول الموحدة للعملاء وأنت (من خلال الباسورد المباشر HendFtw00 أو الأكواد المؤقتة) -->
+<!-- شاشة الدخول الرئيسية (تستقبل كود الـ 10 دقائق للعملاء، أو باسورد المالك الأول HendFtw00، أو باسورد العامل الثاني Romaftw00) -->
 <div id="pass-screen" class="overlay">
     <div class="login-box">
         <h2>SECURE ACCESS 🔐</h2>
-        <div class="trial-badge"><span>⚡</span> أدخل كود التفعيل أو باسورد المالك</div>
+        <div class="trial-badge"><span>⚡</span> أدخل كود التفعيل أو باسورد الإدارة</div>
         <input type="password" id="pass-input" placeholder="أدخل الكود أو الباسورد">
         <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="checkPass()">دخول</button>
         <div class="version-tag">SYSTEM v8.5.0 [SECURE TOKENS]</div>
     </div>
 </div>
 
-<!-- لوحة المالك لتوليد وإدارة الأكواد (مخفية ولا تفتح إلا بالباسورد HendFtw00) -->
+<!-- لوحة المالك الأولى الخاصة بتوليد الأكواد فقط (تفتح حصرياً بـ HendFtw00) -->
 <div id="admin-panel" class="overlay" style="display:none">
     <div class="login-box" style="border-color: var(--blue); max-width: 420px;">
         <h2 style="color: var(--blue); font-size: 1.1rem;">لوحة توليد الأكواد (المالك فقط) 🛠️</h2>
@@ -156,8 +152,8 @@
         </div>
 
         <div style="margin-top: 10px; border-top: 1px solid #333; padding-top: 8px; text-align: right;">
-            <span style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">الأكواد النشطة وجاهزة للاستخدام (تستمر 10 دقائق من أول استخدام):</span>
-            <div style="max-height: 140px; overflow-y: auto; margin-top: 5px;">
+            <span style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">الأكواد النشطة (تستمر 10 دقائق من أول استخدام):</span>
+            <div style="max-height: 180px; overflow-y: auto; margin-top: 5px;">
                 <table class="id-manage-table" id="codes-table">
                     <thead>
                         <tr>
@@ -171,18 +167,11 @@
             </div>
         </div>
 
-        <!-- لوحة إدارة أجيال الـ IDs (المحاولات) بباسوردها العادي Romaftw00 -->
-        <div style="background: #21262d; padding: 12px; border-radius: 10px; margin-top: 15px; border: 1px solid #444; text-align: center;">
-            <h3 style="color: var(--accent-gold); font-size: 0.95rem; margin-bottom: 8px;">لوحة تفعيل الـ IDs (المحاولات) 🆔</h3>
-            <input type="password" id="roma-pass-input" placeholder="أدخل باسورد لوحة المالك (Romaftw00)" style="font-size: 0.85rem; padding: 8px; margin-bottom: 8px;">
-            <button class="btn-3d" style="background: var(--accent-gold); padding: 8px; font-size: 0.85rem; width: 100%;" onclick="openRomaPanel()">فتح لوحة تفعيل الـ IDs</button>
-        </div>
-
-        <button class="btn-3d" style="background:#444; color:white; margin-top: 15px; padding: 8px;" onclick="closeAdminPanel()">خروج من لوحة المالك ❌</button>
+        <button class="btn-3d" style="background:#444; color:white; margin-top: 15px; padding: 8px;" onclick="closeAdminPanel()">خروج ❌</button>
     </div>
 </div>
 
-<!-- نافذة فرعية لإدارة الـ IDs للمالك (تفتح بـ Romaftw00) -->
+<!-- لوحة العامل/المالك الثانية الخاصة بإدارة وتفعيل الـ IDs فقط (تفتح حصرياً بـ Romaftw00 وتُعطى لمن يشتغل معك) -->
 <div id="roma-panel" class="overlay" style="display:none">
     <div class="login-box" style="border-color: var(--win-green); max-width: 420px;">
         <h2 style="color: var(--win-green); font-size: 1.1rem;">إدارة وتفعيل الـ IDs ⚙️</h2>
@@ -193,7 +182,7 @@
 
         <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 8px; text-align: right;">
             <span style="font-size: 0.75rem; color: var(--win-green); font-weight: bold;">الـ IDs المفعلة حالياً:</span>
-            <div style="max-height: 140px; overflow-y: auto; margin-top: 5px;">
+            <div style="max-height: 180px; overflow-y: auto; margin-top: 5px;">
                 <table class="id-manage-table" id="roma-ids-table">
                     <thead>
                         <tr>
@@ -207,11 +196,11 @@
             </div>
         </div>
 
-        <button class="btn-3d" style="background:#444; color:white; margin-top: 15px; padding: 8px;" onclick="closeRomaPanel()">إغلاق ❌</button>
+        <button class="btn-3d" style="background:#444; color:white; margin-top: 15px; padding: 8px;" onclick="closeRomaPanel()">خروج ❌</button>
     </div>
 </div>
 
-<!-- شاشة إدخال الـ ID للعملاء بعد إدخال كود صحيح -->
+<!-- شاشة إدخال الـ ID للعملاء بعد إدخال كود صحيح من أكواد الـ 10 دقائق -->
 <div id="id-screen" class="overlay" style="display:none">
     <div class="login-box glow-effect" id="id-login-box">
         <h2>ID LOGIN 🆔</h2>
@@ -412,9 +401,7 @@
         let updated = {};
         for (let code in db) {
             let item = db[code];
-            if (item.expiresAt && now > item.expiresAt) {
-                continue;
-            }
+            if (item.expiresAt && now > item.expiresAt) continue;
             updated[code] = item;
         }
         saveStoredCodes(updated);
@@ -432,10 +419,7 @@
             }
             let formattedCode = "VIP-" + randomCode;
             if (!db[formattedCode]) {
-                db[formattedCode] = {
-                    status: "جاهز",
-                    expiresAt: null
-                };
+                db[formattedCode] = { status: "جاهز", expiresAt: null };
             }
         }
         saveStoredCodes(db);
@@ -448,10 +432,10 @@
         let tbody = document.getElementById('codes-tbody');
         tbody.innerHTML = '';
         let db = getStoredCodes();
-
         let codesList = Object.keys(db);
+
         if (codesList.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#777;">لا توجد أكواد نشطة. اضغط توليد دفعة جديدة.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#777;">لا توجد أكواد نشطة.</td></tr>`;
             return;
         }
 
@@ -469,9 +453,7 @@
             tr.innerHTML = `
                 <td style="font-family:monospace; font-weight:bold; color:var(--accent-gold);">${code}</td>
                 <td><span style="font-size:0.75rem;">${statusText}</span></td>
-                <td>
-                    <button class="action-icon-btn" title="حذف الكود" onclick="deleteSingleCode('${code}')">❌</button>
-                </td>
+                <td><button class="action-icon-btn" title="حذف" onclick="deleteSingleCode('${code}')">❌</button></td>
             `;
             tbody.appendChild(tr);
         });
@@ -484,29 +466,12 @@
         renderCodesTable();
     }
 
-    // دوال لوحة تفعيل المحاولات والـ IDs بباسورد المالك العادي Romaftw00
     function getStoredIDs() {
         return JSON.parse(localStorage.getItem('client_ids_db') || '{}');
     }
 
     function saveStoredIDs(db) {
         localStorage.setItem('client_ids_db', JSON.stringify(db));
-    }
-
-    function openRomaPanel() {
-        let pwd = document.getElementById('roma-pass-input').value.trim();
-        if (pwd === "Romaftw00") {
-            document.getElementById('roma-panel').style.display = 'flex';
-            document.getElementById('roma-pass-input').value = '';
-            renderRomaIDsTable();
-        } else {
-            alert("باسورد لوحة تفعيل الـ IDs غير صحيح!");
-            document.getElementById('roma-pass-input').value = '';
-        }
-    }
-
-    function closeRomaPanel() {
-        document.getElementById('roma-panel').style.display = 'none';
     }
 
     function addClientCustomID() {
@@ -539,9 +504,7 @@
             tr.innerHTML = `
                 <td style="font-family:monospace; font-weight:bold; color:var(--win-green);">${idKey}</td>
                 <td><span style="font-size:0.75rem;">${idsDb[idKey].status}</span></td>
-                <td>
-                    <button class="action-icon-btn" title="حذف الـ ID" onclick="deleteSingleID('${idKey}')">❌</button>
-                </td>
+                <td><button class="action-icon-btn" title="حذف" onclick="deleteSingleID('${idKey}')">❌</button></td>
             `;
             tbody.appendChild(tr);
         });
@@ -554,10 +517,11 @@
         renderRomaIDsTable();
     }
 
+    // دالة التحقق من الشاشة الرئيسية وتوجيه كل باسورد للوحته المستقلة تماماً
     async function checkPass() {
         let enteredPass = document.getElementById('pass-input').value.trim();
 
-        // 1. فتح لوحة المالك مباشرة بكلمة المرور HendFtw00
+        // 1. لوحة المالك الأولى (توليد الأكواد فقط)
         if (enteredPass === "HendFtw00") {
             document.getElementById('pass-screen').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'flex';
@@ -566,7 +530,16 @@
             return;
         } 
 
-        // 2. التحقق من الأكواد المؤقتة للعملاء
+        // 2. لوحة إدارة الـ IDs الخاصة بالعامل (تفتح بـ Romaftw00 فقط دون أن يرى أكواد الـ 10 دقائق)
+        if (enteredPass === "Romaftw00") {
+            document.getElementById('pass-screen').style.display = 'none';
+            document.getElementById('roma-panel').style.display = 'flex';
+            renderRomaIDsTable();
+            document.getElementById('pass-input').value = '';
+            return;
+        }
+
+        // 3. التحقق من أكواد الـ 10 دقائق للعملاء العاديين
         cleanupExpiredCodes();
         let db = getStoredCodes();
         if (db[enteredPass]) {
@@ -597,6 +570,11 @@
     
     function closeAdminPanel() {
         document.getElementById('admin-panel').style.display = 'none';
+        document.getElementById('pass-screen').style.display = 'flex';
+    }
+
+    function closeRomaPanel() {
+        document.getElementById('roma-panel').style.display = 'none';
         document.getElementById('pass-screen').style.display = 'flex';
     }
 
