@@ -135,7 +135,7 @@
     </div>
 </div>
 
-<!-- شاشة الدخول الموحدة للعملاء وأنت (من خلال الباسورد المشفر الخاص بك أو الأكواد المؤقتة) -->
+<!-- شاشة الدخول الموحدة للعملاء وأنت (من خلال الباسورد المباشر HendFtw00 أو الأكواد المؤقتة) -->
 <div id="pass-screen" class="overlay">
     <div class="login-box">
         <h2>SECURE ACCESS 🔐</h2>
@@ -146,7 +146,7 @@
     </div>
 </div>
 
-<!-- لوحة المالك لتوليد وإدارة الأكواد (مخفية ولا تفتح إلا بالباسورد المشفر الخاص بك HendFtw00) -->
+<!-- لوحة المالك لتوليد وإدارة الأكواد (مخفية ولا تفتح إلا بالباسورد HendFtw00) -->
 <div id="admin-panel" class="overlay" style="display:none">
     <div class="login-box" style="border-color: var(--blue); max-width: 420px;">
         <h2 style="color: var(--blue); font-size: 1.1rem;">لوحة توليد الأكواد (المالك فقط) 🛠️</h2>
@@ -352,16 +352,6 @@
 </div>
 
 <script>
-    // التشفير الأمني لباسورد المالك الجديد (HendFtw00) لحمايته تماماً من F12
-    const ADMIN_PANEL_HASH = "d11b339474723c34d314815462cf1d5ef264a275467ef65ff428173426e6f54c"; 
-
-    async function hashString(str) {
-        const msgUint8 = new TextEncoder().encode(str);
-        const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
         let savedTheme = localStorage.getItem('user_theme_style') || 'theme-gold';
         document.body.className = savedTheme;
@@ -494,7 +484,7 @@
         renderCodesTable();
     }
 
-    // دوظائف لوحة تفعيل المحاولات والـ IDs بباسورد المالك العادي Romaftw00
+    // دوال لوحة تفعيل المحاولات والـ IDs بباسورد المالك العادي Romaftw00
     function getStoredIDs() {
         return JSON.parse(localStorage.getItem('client_ids_db') || '{}');
     }
@@ -567,9 +557,8 @@
     async function checkPass() {
         let enteredPass = document.getElementById('pass-input').value.trim();
 
-        // 1. التحقق إذا كان المدخل هو باسورد المالك المشفر الجديد (HendFtw00) ليفتح لوحة توليد الأكواد مباشرة
-        let enteredHash = await hashString(enteredPass);
-        if (enteredHash === ADMIN_PANEL_HASH) {
+        // 1. فتح لوحة المالك مباشرة بكلمة المرور HendFtw00
+        if (enteredPass === "HendFtw00") {
             document.getElementById('pass-screen').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'flex';
             renderCodesTable();
@@ -577,7 +566,7 @@
             return;
         } 
 
-        // 2. التحقق إذا كان المدخل كود مؤقت خاص بالعميل (يفتح شاشة إدخال الـ ID)
+        // 2. التحقق من الأكواد المؤقتة للعملاء
         cleanupExpiredCodes();
         let db = getStoredCodes();
         if (db[enteredPass]) {
@@ -586,7 +575,7 @@
             
             if (item.status === "جاهز") {
                 item.status = "active";
-                item.expiresAt = now + (10 * 60 * 1000); // 10 دقائق تبدأ من أول استخدام
+                item.expiresAt = now + (10 * 60 * 1000);
                 saveStoredCodes(db);
             }
 
@@ -596,7 +585,7 @@
                 document.getElementById('pass-input').value = '';
                 return;
             } else {
-                alert("عذراً، هذا الكود انتهت صلاحيته (مرت عليه 10 دقائق)!");
+                alert("عذراً، هذا الكود انتهت صلاحيته!");
                 document.getElementById('pass-input').value = '';
                 return;
             }
