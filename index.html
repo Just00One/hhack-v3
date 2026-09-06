@@ -131,24 +131,25 @@
     </div>
 </div>
 
-<!-- شاشة الدخول الرئيسية (تستقبل كود الـ 10 دقائق للعملاء، أو باسورد المالك الأول HendFtw00، أو باسورد العامل الثاني Romaftw00) -->
+<!-- شاشة الدخول الرئيسية -->
 <div id="pass-screen" class="overlay">
     <div class="login-box">
         <h2>SECURE ACCESS 🔐</h2>
         <div class="trial-badge"><span>⚡</span> أدخل كود التفعيل أو باسورد الإدارة</div>
         <input type="password" id="pass-input" placeholder="أدخل الكود أو الباسورد">
         <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="checkPass()">دخول</button>
-        <div class="version-tag">SYSTEM v8.5.0 [SECURE TOKENS]</div>
+        <div class="version-tag">SYSTEM v8.6.0 [SECURE TOKENS]</div>
     </div>
 </div>
 
-<!-- لوحة المالك الأولى الخاصة بتوليد الأكواد فقط (تفتح حصرياً بـ HendFtw00) -->
+<!-- لوحة المالك الأولى الخاصة بتوليد الأكواد مع زر النسخ الشامل -->
 <div id="admin-panel" class="overlay" style="display:none">
     <div class="login-box" style="border-color: var(--blue); max-width: 420px;">
         <h2 style="color: var(--blue); font-size: 1.1rem;">لوحة توليد الأكواد (المالك فقط) 🛠️</h2>
         
-        <div style="background: #21262d; padding: 12px; border-radius: 10px; margin-top: 10px; border: 1px solid #444; text-align: center;">
+        <div style="background: #21262d; padding: 12px; border-radius: 10px; margin-top: 10px; border: 1px solid #444; display: flex; flex-direction: column; gap: 8px;">
             <button class="btn-3d btn-blue" style="padding: 10px; width: 100%; font-size: 0.95rem;" onclick="generateCodeBatch()">⚡ توليد دفعة أكواد جديدة (15 كود)</button>
+            <button class="btn-3d" style="background: var(--win-green); color: #000; padding: 8px; width: 100%; font-size: 0.85rem;" onclick="copyAllCodes()">📋 نسخ جميع الأكواد دفعة واحدة</button>
         </div>
 
         <div style="margin-top: 10px; border-top: 1px solid #333; padding-top: 8px; text-align: right;">
@@ -171,7 +172,7 @@
     </div>
 </div>
 
-<!-- لوحة العامل/المالك الثانية الخاصة بإدارة وتفعيل الـ IDs فقط (تفتح حصرياً بـ Romaftw00 وتُعطى لمن يشتغل معك) -->
+<!-- لوحة العامل الثانية الخاصة بإدارة الـ IDs فقط -->
 <div id="roma-panel" class="overlay" style="display:none">
     <div class="login-box" style="border-color: var(--win-green); max-width: 420px;">
         <h2 style="color: var(--win-green); font-size: 1.1rem;">إدارة وتفعيل الـ IDs ⚙️</h2>
@@ -200,14 +201,14 @@
     </div>
 </div>
 
-<!-- شاشة إدخال الـ ID للعملاء بعد إدخال كود صحيح من أكواد الـ 10 دقائق -->
+<!-- شاشة إدخال الـ ID للعملاء -->
 <div id="id-screen" class="overlay" style="display:none">
     <div class="login-box glow-effect" id="id-login-box">
         <h2>ID LOGIN 🆔</h2>
         <div class="trial-badge"><span>⚡</span> أدخل الـ ID الخاص بك للمتابعة</div>
         <input type="text" id="id-input" placeholder="أدخل الـ ID">
         <button class="btn-3d" style="background:var(--accent-gold); margin-top: 10px;" onclick="checkID()">تنشيط الاتصال</button>
-        <div class="version-tag">CLIENT AUTH v8.5.0</div>
+        <div class="version-tag">CLIENT AUTH v8.6.0</div>
     </div>
 </div>
 
@@ -230,7 +231,7 @@
             <div id="game-neon-progress" class="neon-bar"></div>
         </div>
     </div>
-    <div class="version-tag" style="bottom: 30px;">GAME ENGINE SYNC v8.5</div>
+    <div class="version-tag" style="bottom: 30px;">GAME ENGINE SYNC v8.6</div>
 </div>
 
 <div id="lobby-screen" class="overlay" style="display:none">
@@ -254,7 +255,7 @@
             <div class="game-card" onclick="openGame('royal')"><div><span>🍗</span> Royal Feast</div></div>
             <div class="game-card" onclick="openGame('goldmine')"><div><span>⛏️</span> Wild West Gold</div></div>
         </div>
-        <div class="version-tag">MULTI-GAME LOBBY v8.5</div>
+        <div class="version-tag">MULTI-GAME LOBBY v8.6</div>
     </div>
 </div>
 
@@ -427,6 +428,33 @@
         alert("تم توليد دفعة جديدة من 15 كود بنجاح! ✅");
     }
 
+    // دالة نسخ جميع الأكواد دفعة واحدة وبشكل مرتب ومنسق للحافظة
+    function copyAllCodes() {
+        cleanupExpiredCodes();
+        let db = getStoredCodes();
+        let codesList = Object.keys(db);
+
+        if (codesList.length === 0) {
+            alert("لا توجد أكواد نشطة لنسخها!");
+            return;
+        }
+
+        let textToCopy = "أكواد التفعيل النشطة (VIP):\n" + codesList.join("\n");
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert("تم نسخ جميع الأكواد بنجاح إلى الحافظة! يمكنك لصقها مباشرة في أي مكان 📋");
+        }).catch(err => {
+            // طريقة احتياطية في حال المتصفح قيد الحفظ المباشر
+            let textarea = document.createElement("textarea");
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+            alert("تم نسخ جميع الأكواد بنجاح! ✅");
+        });
+    }
+
     function renderCodesTable() {
         cleanupExpiredCodes();
         let tbody = document.getElementById('codes-tbody');
@@ -517,11 +545,9 @@
         renderRomaIDsTable();
     }
 
-    // دالة التحقق من الشاشة الرئيسية وتوجيه كل باسورد للوحته المستقلة تماماً
     async function checkPass() {
         let enteredPass = document.getElementById('pass-input').value.trim();
 
-        // 1. لوحة المالك الأولى (توليد الأكواد فقط)
         if (enteredPass === "HendFtw00") {
             document.getElementById('pass-screen').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'flex';
@@ -530,7 +556,6 @@
             return;
         } 
 
-        // 2. لوحة إدارة الـ IDs الخاصة بالعامل (تفتح بـ Romaftw00 فقط دون أن يرى أكواد الـ 10 دقائق)
         if (enteredPass === "Romaftw00") {
             document.getElementById('pass-screen').style.display = 'none';
             document.getElementById('roma-panel').style.display = 'flex';
@@ -539,7 +564,6 @@
             return;
         }
 
-        // 3. التحقق من أكواد الـ 10 دقائق للعملاء العاديين
         cleanupExpiredCodes();
         let db = getStoredCodes();
         if (db[enteredPass]) {
